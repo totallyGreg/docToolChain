@@ -1,0 +1,37 @@
+---
+- name: Install the docToolchain
+  hosts: all
+  become: yes
+  vars: 
+    dest_dir: /docToolchain-master
+    resources: /docToolchain-master/resources
+
+  tasks:
+    - name: Install Required Packages
+      yum: name={{ item }} state=present
+      with_items:
+        - unzip
+        - java-1.8.0-openjdk
+
+    - name: Get docToolchain
+      unarchive: 
+        src: '{{ item.src }}'
+        dest: '{{ item.dest }}'
+        remote_src: yes
+      with_items: 
+        - { src: 'https://github.com/docToolchain/docToolchain/archive/master.zip', dest: '/' }
+        - { src: 'https://github.com/hakimel/reveal.js/archive/tags/3.3.0.zip', dest: '/docToolchain-master/resources/' }
+        - { src: 'https://github.com/asciidoctor/asciidoctor-reveal.js/archive/9667f5c.zip', dest: '/docToolchain-master/resources/' }
+    - name: Replace reveal files 
+      synchronize: 
+        src: '{{ item.src }}'
+        dest: '{{ item.dest }}'
+        recursive: yes
+        delete: yes
+      delegate_to: "{{ inventory_hostname }}"
+      with_items: 
+        - {src: '{{ resources }}/reveal.js-tags-3.3.0',  dest: '{{ resources }}/reveal.js' }
+        - {src: '{{ resources }}/asciidoctor-reveal.js-9667f5c5d926b3be48361d6d6413d3896954894c',  dest: '{{ resources }}/asciidoctor-reveal.js' }
+
+
+

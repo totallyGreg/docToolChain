@@ -6,14 +6,14 @@ VAGRANTFILE_API_VERSION = '2'
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.box_check_update = false
-  config.vm.synced_folder '.', '/vagrant' , disabled: false
+  config.vm.synced_folder '.', '/vagrant', type: 'virtualbox'
 
   config.hostmanager.enabled = true
   config.hostmanager.ignore_private_ip = false
 
   config.vm.define 'docTool' do |cfg|
+    #cfg.vm.box = 'hashicorp/precise64'
     cfg.vm.box = 'centos/7'
-    #cfg.vm.box = 'boxcutter/centos7'
     #cfg.vm.box = 'abessifi/debian-jessie-ansible'
     #cfg.vm.box = 'abessifi/ubuntu-trusty-ansible'
     #cfg.vm.box  = 'abessifi/opensuse-13.2-ansible'

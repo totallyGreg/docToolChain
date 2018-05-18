@@ -7,11 +7,20 @@
     resources: /docToolchain-master/resources
 
   tasks:
+    - name: Add Oracle Java Repository
+      apt_repository: repo='ppa:webupd8team/java'
+
+    - name: Accept Java 8 License
+      become: yes
+      debconf: name='oracle-java8-installer' question='shared/accepted-oracle-license-v1-1' value='true' vtype='select'
+
     - name: Install Required Packages
-      apt: name={{ item }} state=present
+      apt: name={{ item }} state=latest
       with_items:
         - unzip
-        - default-jre
+        - oracle-java8-installer
+        - ca-certificates
+        - oracle-java8-set-default
         - pandoc
 
 ## Need to fix permissions on /docToolchain-master directory so vagrant can write to it.  

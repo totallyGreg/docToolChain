@@ -8,10 +8,11 @@
 
   tasks:
     - name: Install Required Packages
-      yum: name={{ item }} state=present
+      apt: name={{ item }} state=present
       with_items:
         - unzip
-        - java-1.8.0-openjdk
+        - default-jre
+        - pandoc
 
 ## Need to fix permissions on /docToolchain-master directory so vagrant can write to it.  
     - name: Get docToolchain

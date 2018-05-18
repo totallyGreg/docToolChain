@@ -1,0 +1,10 @@
+= docToolchain 
+
+First attempt at creating an easy up easy down doctool VM
+second was switching to ubuntu
+
+Next will be hosting it on OCI so team members can use it easily. 
+
+Wrap up some automation into it
+
+Later turn it into a container.  

@@ -10,6 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #config.vbguest.iso_path = "/Applications/VirtualBox.app/Contents/MacOS/VBoxGuestAdditions.iso"
   config.vbguest.auto_update = true
   config.vm.synced_folder '.', '/vagrant', type: 'virtualbox'
+  config.vm.synced_folder '/Users/jwilliams/Clouds/Box Sync/BNY Mellon/Documentation', '/Documentation', type: 'virtualbox'
 
   config.hostmanager.enabled = true
   config.hostmanager.ignore_private_ip = false

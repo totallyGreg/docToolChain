@@ -45,6 +45,3 @@
       with_items: 
         - {src: '{{ resources }}/reveal.js-tags-3.3.0',  dest: '{{ resources }}/reveal.js' }
         - {src: '{{ resources }}/asciidoctor-reveal.js-9667f5c5d926b3be48361d6d6413d3896954894c',  dest: '{{ resources }}/asciidoctor-reveal.js' }
-
-
-

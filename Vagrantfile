@@ -26,7 +26,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     cfg.vm.network 'private_network', ip: '192.168.33.102'
     cfg.vm.provider 'virtualbox' do |vb|
       vb.name = 'docTool'
-      vb.memory = 2024
+      vb.memory = 4096
       vb.cpus   = 2
     end
     cfg.vm.provision 'ansible' do |ansible|

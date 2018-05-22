@@ -11,7 +11,7 @@
     - name: Set timezone to Hardware Clock
       timezone:
         name: America/New_York
-        
+
     - name: Add Oracle Java Repository
       apt_repository: repo='ppa:webupd8team/java'
 
@@ -34,31 +34,6 @@
         repo: https://github.com/docToolchain/docToolchain.git
         dest: "{{ dest_dir }}"
       when: git
-
-    - name: Get docToolchain
-      unarchive:
-        src: '{{ item.src }}'
-        dest: '{{ item.dest }}'
-        creates: '{{ item.creates }}'
-        owner: vagrant
-        remote_src: yes
-      with_items:
-        - { src: 'https://github.com/docToolchain/docToolchain/archive/master.zip', dest: '/', creates: '/docToolchain-master' }
-        - { src: 'https://github.com/hakimel/reveal.js/archive/tags/3.3.0.zip', dest: '/docToolchain-master/resources/', creates: '{{ resources }}/reveal.js-tags-3.3.0' }
-        - { src: 'https://github.com/asciidoctor/asciidoctor-reveal.js/archive/9667f5c.zip', dest: '/docToolchain-master/resources/', creates: '{{ resources }}/asciidoctor-reveal.js-9667f5c5d926b3be48361d6d6413d3896954894c' }
-      when: not git
-    - name: Replace reveal files
-      synchronize:
-        src: '{{ item.src }}'
-        dest: '{{ item.dest }}'
-        recursive: yes
-        delete: yes
-      delegate_to: "{{ inventory_hostname }}"
-      with_items:
-        - {src: '{{ resources }}/reveal.js-tags-3.3.0',  dest: '{{ resources }}/reveal.js' }
-        - {src: '{{ resources }}/asciidoctor-reveal.js-9667f5c5d926b3be48361d6d6413d3896954894c',  dest: '{{ resources }}/asciidoctor-reveal.js' }
-      when: not git
-
 
     - name: Set Permissions on {{ dest_dir }}
       file:

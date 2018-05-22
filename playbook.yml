@@ -8,6 +8,10 @@
     git: true
 
   tasks:
+    - name: Set timezone to Hardware Clock
+      timezone:
+        name: America/New_York
+        
     - name: Add Oracle Java Repository
       apt_repository: repo='ppa:webupd8team/java'
 
@@ -62,6 +66,11 @@
         owner: vagrant
         group: vagrant
         recurse: yes
+
+    - name: add doctoolchain to path
+      copy:
+        dest: /etc/profile.d/doctool-path.sh
+        content: 'PATH=$PATH:{{ dest_dir }}/bin'
 
 ## Need to add pdf-fontsdir to scripts/AsciiDocBasics.gradle
 ##             'pdf-fontsdir': "${docDir}/pdfTheme/fonts",

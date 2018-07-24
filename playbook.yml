@@ -29,10 +29,14 @@
         - pandoc
         - git
 
-    - name: Clone docToolchain
+      ## Added force to allow the update to occur despite AsciiDocBasics.gradle being modified.  
+      ## This should be setable per document intead of whole doctoolchain.  
+    - name: Checkout latest docToolchain
       git:
         repo: https://github.com/docToolchain/docToolchain.git
         dest: "{{ dest_dir }}"
+        update: yes
+        force: yes
       when: git
 
     - name: Set Permissions on {{ dest_dir }}

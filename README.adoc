@@ -1,10 +1,82 @@
-= docToolchain 
+= docToolchain
 
 First attempt at creating an easy up easy down doctool VM
 second was switching to ubuntu
 
-Next will be hosting it on OCI so team members can use it easily. 
+Next will be hosting it on OCI so team members can use it easily.
 
 Wrap up some automation into it
 
-Later turn it into a container.  
+Later turn it into a container.
+
+== Start the VM
+
+Assuming you have vagrant installed on your machine it's as easy as vagrant up.
+This will:
+
+* start the VM and install the docToolChain into the docToolVM.  This
+* create a virtual directory called /vagrant inside the VM that points to
+this root directory.
+This can take a few minutes to complete the first time it is
+provisioned.
+
+[source,bash]
+----
+$ vagrant up
+----
+
+== Edit Vagrantfile
+In addition to the default /vagrant sync'd folder that is visible from inside
+the VM, you can also create a virtual directory that points to
+somewhere else in the filesytem.
+
+I have added the location of the Box Folder that holds the stores the
+main documentation for whatever project we're working on.
+
+For example:
+[source,vagrantfile]
+----
+config.vm.synced_folder '/Users/jwilliams/Clouds/Box Sync/BNY Mellon/Documentation', '/Documentation', type: 'virtualbox'
+----
+
+
+
+== Generate Documents
+. Download the documentation that you want to generate to this directory. Which
+will show up inside the VM under /vagrant.  Or use another location if created
+in Vagrantfile
++
+[source,bash]
+----
+git clone -b BNYM https://github.com/fsgssg/synnefo-asciidoc.git BNYM
+----
+
+=== From Inside the VM
+. Login to docToolVM
++
+[source,bash]
+----
+vagrant ssh
+----
+. Generate the PDF from inside the VM
++
+[source,bash]
+----
+vagrant@doctool:~$ doctoolchain /vagrant/BNYM generatePDF
+----
+
+=== From Outside the VM
+. Simply Generate the PDF from host machine
++
+[source,bash]
+----
+vagrant ssh --command '(doctoolchain /vagrant/BNYM generatePDF)'
+----
+
+=== View the PDF
+. View the PDF in the deliverables/PDF directory
++
+[source,bash]
+----
+open docToolVM/BNYM/Deliverables/pdf/sop_BNYM.pdf
+----

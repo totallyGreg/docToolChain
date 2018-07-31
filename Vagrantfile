@@ -5,17 +5,14 @@ VAGRANTFILE_API_VERSION = '2'
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.box_check_update = true
-  #config.vbguest.iso_path = "#{ENV['HOME']}/Downloads/VBoxGuestAdditions.iso"
-  #config.vbguest.iso_path = "/Applications/VirtualBox.app/Contents/MacOS/VBoxGuestAdditions.iso"
-  config.vbguest.auto_update = true
-  config.vm.synced_folder '.', '/vagrant', type: 'virtualbox'
-  config.vm.synced_folder '/Users/jwilliams/Clouds/Box Sync/BNY Mellon/Documentation', '/Documentation', type: 'virtualbox'
-
   config.hostmanager.enabled = true
   config.hostmanager.ignore_private_ip = false
 
   config.vm.define 'docTool' do |cfg|
+    cfg.vm.box_check_update = true
+    cfg.vbguest.auto_update = true
+    cfg.vm.synced_folder '.', '/vagrant', type: 'virtualbox'
+    cfg.vm.synced_folder '/Users/jwilliams/Clouds/Box Sync/BNY Mellon/Documentation', '/Documentation', type: 'virtualbox'
     #cfg.vm.box = 'hashicorp/precise64'
     #cfg.vm.box = 'centos/7'
     cfg.vm.box = 'ubuntu/trusty64'
@@ -36,4 +33,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
+  ## Attempts to create a docker version of the doctoolchain
+  #config.vm.define "dockerTool" do |dockerTool|
+  #  dockerTool.vm.provider "docker" do |d|
+  #    d.image = "erikadp/ubuntu-trusty-java8-oracle-tools"
+  #  end
+  #end
 end
